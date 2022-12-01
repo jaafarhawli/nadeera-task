@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TodoListController;
 
 Route::group(["prefix"=> "v1"], function() {
     
@@ -11,6 +12,7 @@ Route::group(["prefix"=> "v1"], function() {
 
     Route::group(["middleware" => "auth:api"], function() {
         Route::get('/valid', function () { return 1; });
+        Route::get('/', [TodoListController::class, "showList"]);
     });
     
 }); 
