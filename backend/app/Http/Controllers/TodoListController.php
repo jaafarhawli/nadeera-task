@@ -7,7 +7,7 @@ use App\Models\TodoList;
 
 class TodoListController extends Controller
 {
-    function showList(Request $id) {
+    function showList() {
         $data = TodoList::get(["id","name","description", "image"]);
 
         return response()->json([

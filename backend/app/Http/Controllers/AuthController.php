@@ -43,9 +43,8 @@ class AuthController extends Controller
         $user->profile_picture = $request->profile_picture;
         $user->save();
 
-        if (!$token=JWTAuth::fromUser($user)) {
-            return response()->json(['error' => 'invalid credentials'], 401);
-        }
+        $user=User::where('id','=',$request->id)->first();
+        $token=JWTAuth::fromUser($user);
 
         return response()->json([
             "status" => 1,
