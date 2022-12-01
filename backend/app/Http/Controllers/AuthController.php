@@ -11,5 +11,20 @@ use JWTAuth;
 class AuthController extends Controller
 {
 
+    public function login(Request $request)
+    {
+        $user=User::where('id','=',$request->id)->first();
+        if(!$user) {
+            return response()->json([
+                'status' => 0,
+                'error' => 'user is not registered'], 400);
+        }
 
+        if (!$token=JWTAuth::fromUser($user)) {
+                    return response()->json(['error' => 'invalid credentials'], 401);
+                }
+            
+        return response()->json([ 'status'=> 1, 'token'=>$token]);
+    }
+    
 }
