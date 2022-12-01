@@ -26,5 +26,35 @@ class AuthController extends Controller
             
         return response()->json([ 'status'=> 1, 'token'=>$token]);
     }
-    
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            "id" => "required|unique:users",
+            "name" => "required",
+            "date_of_birth" => "required",
+            "profile_picture" => "required",
+        ]);
+
+        $user = new User();
+        $user->id = $request->id;
+        $user->name = $request->name;
+        $user->date_of_birth = $request->date_of_birth;
+        $user->profile_picture = $request->profile_picture;
+        $user->save();
+
+        if (!$token=JWTAuth::fromUser($user)) {
+            return response()->json(['error' => 'invalid credentials'], 401);
+        }
+
+        return response()->json([
+            "status" => 1,
+            "message" => "User registered successfully",
+            "authorisation" => [
+                "token" => $token,
+                "type" => "bearer",
+            ]
+        ], 200);
+    }
+
 }
