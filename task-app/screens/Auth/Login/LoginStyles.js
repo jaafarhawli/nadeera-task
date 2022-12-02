@@ -15,10 +15,23 @@ export const styles = StyleSheet.create({
 
     header: {
         color: colors.secondary,
-        marginTop: 40
+        marginTop: 40,
+        marginBottom: 20
     },
     button: {
         backgroundColor: colors.blue,
-        marginTop: 20
+        width: 250,
+        height: 50,
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    waves: {
+        width: '100%',
+        position: 'absolute',
+        bottom: 0
     }
   });
