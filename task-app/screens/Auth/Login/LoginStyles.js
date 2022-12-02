@@ -16,5 +16,9 @@ export const styles = StyleSheet.create({
     header: {
         color: colors.secondary,
         marginTop: 40
+    },
+    button: {
+        backgroundColor: colors.blue,
+        marginTop: 20
     }
   });

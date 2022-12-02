@@ -5,4 +5,5 @@ export default {
     black: {
         100: '#000000',
     },
+    blue: '#1A6ED8'
 }

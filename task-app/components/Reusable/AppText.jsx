@@ -23,7 +23,8 @@ export default AppText
 
 const styles = StyleSheet.create({
     h1: {
-        fontSize: 35
+        fontSize: 35,
+        fontWeight: 'bold'
     },
     h2: {
         fontSize: 28
