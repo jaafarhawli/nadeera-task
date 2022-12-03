@@ -9,6 +9,7 @@ import * as Facebook from 'expo-auth-session/providers/facebook'
 import { useMutation } from '@tanstack/react-query'
 import axios from '../../../api/axios/axios'
 import { useNavigation } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 
 const Login = () => {
 
@@ -36,7 +37,13 @@ const Login = () => {
         picture: data.data.picture
       });
       } else {
-        console.log(login.data);
+        await SecureStore.setItemAsync('user', {
+          token: login.data.token,
+          name:login.data.data.name,
+          birthday: login.data.data.date_of_birth,
+          picture: login.data.data.profile_picture
+        });
+        navigation.navigate('Dashboard');
       }
       } catch(error) {
         console.log(error)
