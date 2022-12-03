@@ -1,11 +1,17 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './navigations/AuthNavigator';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 export default function App() {
+
+  const client = new QueryClient();
+
   return (
-    <NavigationContainer>
-      <AuthNavigator />
-    </NavigationContainer>
+    <QueryClientProvider client={client}>
+      <NavigationContainer>
+        <AuthNavigator />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
