@@ -17,7 +17,7 @@ class AuthController extends Controller
         if(!$user) {
             return response()->json([
                 'status' => 0,
-                'error' => 'user is not registered'], 400);
+                'error' => 'user is not registered'], 200);
         }
 
         if (!$token=JWTAuth::fromUser($user)) {
