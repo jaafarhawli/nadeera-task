@@ -8,8 +8,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import { useMutation } from '@tanstack/react-query'
 import axios from '../../../api/axios/axios'
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
+
+  const navigation = useNavigation();
 
   const [ , , fbPromptAsync] = Facebook.useAuthRequest({
     clientId: "519953483484349"
@@ -20,7 +23,24 @@ const Login = () => {
     if(response.type === 'success') {
       const { access_token } = response.params;
       const data = await axios.get(`https://graph.facebook.com/me?fields=id,name,birthday,picture&access_token=${access_token}`);
-      console.log(data.data);
+      console.log(data.data.id, data.data.birthday);
+      const form = {
+        id: data.data.id
+      }
+      try { const login = await axios.post('login', form);
+      if(login.data.status === 0) {
+      navigation.navigate('Register', {
+        id: data.data.id,
+        name: data.data.name,
+        birthday: data.data.birthday,
+        picture: data.data.picture
+      });
+      } else {
+        console.log(login.data);
+      }
+      } catch(error) {
+        console.log(error)
+      }
     }
   })
 
