@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import { styles } from './LoginStyles'
 import { images } from '../../../constants'
 import AppText from '../../../components/Reusable/AppText'
@@ -23,8 +23,8 @@ const Login = () => {
     const response = await fbPromptAsync();
     if(response.type === 'success') {
       const { access_token } = response.params;
-      const data = await axios.get(`https://graph.facebook.com/me?fields=id,name,birthday,picture&access_token=${access_token}`);
-      console.log(data.data.id, data.data.birthday);
+      const data = await axios.get(`https://graph.facebook.com/me?fields=id,name,birthday&access_token=${access_token}`);
+      const picture = `https://graph.facebook.com/${data.data.id}/picture?access_token=${access_token}&height=800&width=800`;
       const form = {
         id: data.data.id
       }
@@ -34,7 +34,7 @@ const Login = () => {
         id: data.data.id,
         name: data.data.name,
         birthday: data.data.birthday,
-        picture: data.data.picture
+        picture: picture
       });
       } else {
         await SecureStore.setItemAsync('user', {

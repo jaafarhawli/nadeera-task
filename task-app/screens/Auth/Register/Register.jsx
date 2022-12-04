@@ -31,7 +31,6 @@ const Register = ({route}) => {
   };
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -60,12 +59,12 @@ const Register = ({route}) => {
         name: fileName
     });
     formData.append('id', id)
-     try { const uploadImage = await axios.post('profile', formData, {
+     try { 
+      await axios.post('profile', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log(uploadImage);
     }
     catch(error) {
       console.log(error);
@@ -75,6 +74,7 @@ const Register = ({route}) => {
 
   return (
     <View style={styles.container}>
+      <Image source={image?{uri: image} : {uri:picture}} style={styles.profile} />
       <AppButton onPress={pickImage}>Select Your Profile Picture</AppButton>
       <Input placeholder='Name' style={styles.nameInput} />
       <AppButton style={styles.birthdayButton} textStyle={styles.birthdayButtonText} onPress={showDatepicker}>Select Birthday Date</AppButton>
@@ -87,7 +87,6 @@ const Register = ({route}) => {
           onChange={onChange}
         />
       )}
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
     </View>
   )
 }

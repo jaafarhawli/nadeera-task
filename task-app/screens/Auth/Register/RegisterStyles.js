@@ -18,5 +18,11 @@ export const styles = StyleSheet.create({
     },
     birthdayButtonText: {
       color: colors.secondary
+    },
+    profile: {
+      width: 200, 
+      height: 200,
+      borderRadius: 200,
+      marginBottom: 20
     }
   });
