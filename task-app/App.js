@@ -7,6 +7,8 @@ import { validate } from './api/validateUser';
 import React, {useState, useEffect} from 'react'
 import { ActivityIndicator, View } from 'react-native';
 import { colors } from './constants';
+import {Provider} from 'react-redux';
+import { store } from './redux/store';
 
 export default function App() {
 
@@ -25,20 +27,22 @@ export default function App() {
   }, [isAuth]);
 
   return (
-    <QueryClientProvider client={client}>
-      <NavigationContainer>
-        {
-        loading ? 
-        <View style={{flex:1, justifyContent: 'center', alignItems:'center'}}>
-          <ActivityIndicator size="large" color={colors.primary} />
-        </View>
-        :
-        isAuth ? 
-        <DrawerNavigator />
-        :
-        <AuthNavigator />
-        }
-      </NavigationContainer>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={client}>
+        <NavigationContainer>
+          {
+          loading ? 
+          <View style={{flex:1, justifyContent: 'center', alignItems:'center'}}>
+            <ActivityIndicator size="large" color={colors.primary} />
+          </View>
+          :
+          isAuth ? 
+          <DrawerNavigator />
+          :
+          <AuthNavigator />
+          }
+        </NavigationContainer>
+      </QueryClientProvider>
+    </Provider>
   );
 }
