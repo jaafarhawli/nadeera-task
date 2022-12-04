@@ -37,12 +37,10 @@ const Login = () => {
         picture: picture
       });
       } else {
-        await SecureStore.setItemAsync('user', {
-          token: login.data.token,
-          name:login.data.data.name,
-          birthday: login.data.data.date_of_birth,
-          picture: login.data.data.profile_picture
-        });
+        await SecureStore.setItemAsync('token',login.data.token);
+        await SecureStore.setItemAsync('name',login.data.data.name);
+        await SecureStore.setItemAsync('birthday',login.data.data.date_of_birth);
+        await SecureStore.setItemAsync('picture',login.data.data.profile_picture);
         navigation.navigate('Dashboard');
       }
       } catch(error) {
