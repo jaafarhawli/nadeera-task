@@ -16,7 +16,7 @@ const Register = ({route}) => {
 
   const {id, name, birthday, picture} = route.params;
   const [show, setShow] = useState(false);
-  const [date, setDate] = useState(birthday? new Date(birthday): '');
+  const [date, setDate] = useState(birthday? new Date(birthday): new Date());
   const [image, setImage] = useState(picture? picture: '');
   const [userName, setUserName] = useState(name? name: '');
   const [imageChanged, setImageChanged] = useState(false);
