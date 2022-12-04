@@ -1,23 +1,24 @@
-import { View, Text, Image } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import { View, Text } from 'react-native'
+import React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import * as SecureStore from 'expo-secure-store';
-import { styles } from './DashboardStyles';
+import axios from '../../api/axios/axios';
 
 const Dashboard = () => {
-    const [picture, setPicture] = useState();
-    const getImage = async () => {
-        const pic = await SecureStore.getItemAsync('picture');
-        setPicture(pic);
-    }
+    
+    const {data} = useQuery([], async () => {
+        const token = await SecureStore.getItemAsync('token');
+        return axios.get('', {
+            headers: {
+                Authorization: `bearer ${token}`
+        }}).then((res) => res.data.data);
+    })
 
-    useEffect(() => {
-      getImage();
-    }, []);
+    console.log(data);
 
   return (
     <View>
       <Text>Dashboard</Text>
-      <Image source={{uri: picture}} style={styles.profile} />
     </View>
   )
 }
