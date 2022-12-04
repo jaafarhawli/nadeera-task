@@ -9,7 +9,6 @@ import * as Facebook from 'expo-auth-session/providers/facebook'
 import { useMutation } from '@tanstack/react-query'
 import axios from '../../../api/axios/axios'
 import { useNavigation } from '@react-navigation/native';
-import * as SecureStore from 'expo-secure-store';
 import { colors } from '../../../constants'
 import { login } from '../../../api/login'
 

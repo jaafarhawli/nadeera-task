@@ -5,11 +5,10 @@ import Input from '../../../components/Reusable/Input'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AppButton from '../../../components/Reusable/AppButton';
 import * as ImagePicker from 'expo-image-picker';
-import axios from '../../../api/axios/axios';
 import AppText from '../../../components/Reusable/AppText';
-import * as SecureStore from 'expo-secure-store';
 import { colors } from '../../../constants'
 import { useNavigation } from '@react-navigation/native';
+import { register as registerApi } from '../../../api/register';
 
 const Register = ({route}) => {
 
@@ -78,22 +77,7 @@ const Register = ({route}) => {
     formData.append('id', id);
     formData.append('name', userName);
     formData.append('date_of_birth', formattedDate);
-     try { 
-      const data = await axios.post('register', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      await SecureStore.setItemAsync('token',data.data.authorization.token);
-      await SecureStore.setItemAsync('name',userName);
-      await SecureStore.setItemAsync('birthday',formattedDate);
-      await SecureStore.setItemAsync('picture',data.data.data.profile_picture);
-      await SecureStore.setItemAsync('id', id);
-      navigation.navigate('Home');
-    }
-    catch(error) {
-      console.log(error);
-    }
+    registerApi(formData, userName, formattedDate, id, navigation);
   }
 
   useEffect(() => {
