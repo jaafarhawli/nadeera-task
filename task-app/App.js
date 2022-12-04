@@ -11,7 +11,7 @@ export default function App() {
   return (
     <QueryClientProvider client={client}>
       <NavigationContainer>
-        <DrawerNavigator />
+        <AuthNavigator />
       </NavigationContainer>
     </QueryClientProvider>
   );

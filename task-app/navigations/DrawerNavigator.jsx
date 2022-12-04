@@ -1,6 +1,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { colors } from '../constants';
+import CustomDrawer from '../components/Complex/CustomDrawer';
 import { Dashboard } from '../screens';
+import AuthNavigator from './AuthNavigator';
 
 const Drawer = createDrawerNavigator();
 
@@ -18,8 +19,11 @@ function DrawerNavigator() {
                 elevation: 0,
                 shadowOpacity: 0,
         },
-      }}>
+      }}
+      drawerContent={props => <CustomDrawer {...props} />}
+      >
         <Drawer.Screen name='Home' component={Dashboard} />
+        <Drawer.Screen name='Login' component={AuthNavigator} />
     </Drawer.Navigator>
   );
 }

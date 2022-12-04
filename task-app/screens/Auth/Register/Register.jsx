@@ -44,8 +44,6 @@ const Register = ({route}) => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
       setImageChanged(true);
@@ -79,7 +77,6 @@ const Register = ({route}) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log(data.data.authorization.token, data.data.data.profile_picture)
       await SecureStore.setItemAsync('token',data.data.authorization.token);
       await SecureStore.setItemAsync('name',userName);
       await SecureStore.setItemAsync('birthday',formattedDate);

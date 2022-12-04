@@ -31,5 +31,8 @@ const styles = StyleSheet.create({
     },
     h3: {
         fontSize: 22
+    },
+    h4: {
+        fontSize: 18
     }
 })
