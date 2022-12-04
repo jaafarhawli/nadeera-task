@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, Image } from 'react-native'
+import { View, Image } from 'react-native'
 import React, {useState} from 'react'
 import { styles } from './LoginStyles'
 import { images } from '../../../constants'
@@ -9,8 +9,8 @@ import * as Facebook from 'expo-auth-session/providers/facebook'
 import { useMutation } from '@tanstack/react-query'
 import axios from '../../../api/axios/axios'
 import { useNavigation } from '@react-navigation/native';
-import { colors } from '../../../constants'
 import { login } from '../../../api/login'
+import Loader from '../../../components/Reusable/Loader'
 
 const Login = () => {
 
@@ -42,9 +42,7 @@ const Login = () => {
   return (
     <>
     {loading ?
-    <View style={{flex:1, justifyContent: 'center', alignItems:'center'}}>
-     <ActivityIndicator size="large" color={colors.primary} />
-    </View>
+    <Loader />
     :
     <View style={styles.container}>
         <Image source={images.logo} style={styles.image} />

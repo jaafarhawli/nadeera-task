@@ -5,8 +5,7 @@ import DrawerNavigator from './navigations/DrawerNavigator';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import { validate } from './api/validateUser';
 import React, {useState, useEffect} from 'react'
-import { ActivityIndicator, View } from 'react-native';
-import { colors } from './constants';
+import Loader from './components/Reusable/Loader';
 
 export default function App() {
 
@@ -32,9 +31,7 @@ export default function App() {
         <NavigationContainer>
           {
           loading ? 
-          <View style={{flex:1, justifyContent: 'center', alignItems:'center'}}>
-            <ActivityIndicator size="large" color={colors.primary} />
-          </View>
+          <Loader />
           :
           // If the stored token is valid, open the dashboard page
           // Else, redirect to the login page
