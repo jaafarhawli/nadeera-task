@@ -9,8 +9,11 @@ import axios from '../../../api/axios/axios';
 import AppText from '../../../components/Reusable/AppText';
 import * as SecureStore from 'expo-secure-store';
 import { colors } from '../../../constants'
+import { useNavigation } from '@react-navigation/native';
 
 const Register = ({route}) => {
+
+  const navigation = useNavigation();
 
   const {id, name, birthday, picture} = route.params;
   console.log(id, name, birthday, picture);
@@ -82,6 +85,7 @@ const Register = ({route}) => {
       await SecureStore.setItemAsync('name',userName);
       await SecureStore.setItemAsync('birthday',formattedDate);
       await SecureStore.setItemAsync('picture',data.data.data.profile_picture);
+      navigation.navigate('Dashboard');
     }
     catch(error) {
       console.log(error);
