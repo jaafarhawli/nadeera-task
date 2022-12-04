@@ -11,6 +11,7 @@ import axios from '../../../api/axios/axios'
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { colors } from '../../../constants'
+import { login } from '../../../api/login'
 
 const Login = () => {
 
@@ -34,29 +35,7 @@ const Login = () => {
       const data = await axios.get(`https://graph.facebook.com/me?fields=id,name,birthday&access_token=${access_token}`);
       // Get the profile picture
       const picture = `https://graph.facebook.com/${data.data.id}/picture?access_token=${access_token}&height=800&width=800`;
-      const form = {
-        id: data.data.id
-      }
-      try { const login = await axios.post('login', form);
-      if(login.data.status === 0) {
-      navigation.navigate('Register', {
-        id: data.data.id,
-        name: data.data.name,
-        birthday: data.data.birthday,
-        picture: picture
-      });
-      } else {
-        await SecureStore.setItemAsync('token',login.data.token);
-        await SecureStore.setItemAsync('name',login.data.data.name);
-        await SecureStore.setItemAsync('birthday',login.data.data.date_of_birth);
-        await SecureStore.setItemAsync('picture',login.data.data.profile_picture);
-        await SecureStore.setItemAsync('id',login.data.id);
-        setLoading(false);
-        navigation.navigate('Home');
-      }
-      } catch(error) {
-        console.log(error)
-      }
+      login(data.data.id, picture, navigation, setLoading);
     }
     setLoading(false);
   })
