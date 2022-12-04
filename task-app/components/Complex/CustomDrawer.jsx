@@ -27,7 +27,7 @@ const CustomDrawer = (props) => {
 
     const signOut = async () => {
         SecureStore.deleteItemAsync('token').then(
-            navigation.navigate('Login')
+            navigation.replace('Login')
         );
     }
 

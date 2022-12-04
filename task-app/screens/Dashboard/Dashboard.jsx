@@ -1,8 +1,11 @@
-import { View, Text } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import * as SecureStore from 'expo-secure-store';
 import axios from '../../api/axios/axios';
+import { styles } from './DashboardStyles';
+import AppText from '../../components/Reusable/AppText';
+import Task from '../../components/Reusable/Task';
 
 const Dashboard = () => {
     
@@ -14,12 +17,13 @@ const Dashboard = () => {
         }}).then((res) => res.data.data);
     })
 
-    console.log(data);
-
   return (
-    <View>
-      <Text>Dashboard</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <AppText h3 style={styles.header}>Todo List</AppText>
+      {data?.map((task, index) => (
+        <Task key={index} image={task.image} name={task.name} description={task.description} date={task.date.split(" ")[0]} />
+     ))}
+    </ScrollView>
   )
 }
 
