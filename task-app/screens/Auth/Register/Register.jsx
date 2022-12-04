@@ -81,6 +81,7 @@ const Register = ({route}) => {
       await SecureStore.setItemAsync('name',userName);
       await SecureStore.setItemAsync('birthday',formattedDate);
       await SecureStore.setItemAsync('picture',data.data.data.profile_picture);
+      await SecureStore.setItemAsync('id', id);
       navigation.navigate('Home');
     }
     catch(error) {

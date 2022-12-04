@@ -1,5 +1,5 @@
-import {DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer';
-import { View, Text, Image, StyleSheet } from 'react-native'
+import {DrawerContentScrollView} from '@react-navigation/drawer';
+import { View, Image, StyleSheet } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import * as SecureStore from 'expo-secure-store';
 import { colors } from '../../constants';
@@ -27,7 +27,7 @@ const CustomDrawer = (props) => {
 
     const signOut = async () => {
         SecureStore.deleteItemAsync('token').then(
-            navigation.replace('Login')
+            navigation.reset({ index: 0, routes: [{ name: "Login" }], })
         );
     }
 

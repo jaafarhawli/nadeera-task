@@ -9,7 +9,7 @@ import Task from '../../components/Reusable/Task';
 
 const Dashboard = () => {
     
-    const {data} = useQuery([], async () => {
+    const {data} = useQuery(["todoList"], async () => {
         const token = await SecureStore.getItemAsync('token');
         return axios.get('', {
             headers: {

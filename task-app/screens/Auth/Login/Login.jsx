@@ -41,6 +41,7 @@ const Login = () => {
         await SecureStore.setItemAsync('name',login.data.data.name);
         await SecureStore.setItemAsync('birthday',login.data.data.date_of_birth);
         await SecureStore.setItemAsync('picture',login.data.data.profile_picture);
+        await SecureStore.setItemAsync('id',login.data.id);
         navigation.navigate('Home');
       }
       } catch(error) {

@@ -9,19 +9,21 @@ export const validate = async () => {
     id: id
   }
   try { 
-    const user = await axios.post('login', form, {
+    const user = await axios.post('valid', form, {
         headers: {
             Authorization: `bearer ${token}`
         }
     });
-    await SecureStore.setItemAsync('token',user.data.token);
-    await SecureStore.setItemAsync('name',user.data.data.name);
-    await SecureStore.setItemAsync('birthday',user.data.data.date_of_birth);
-    await SecureStore.setItemAsync('picture',user.data.data.profile_picture);
-    return 1;
-
+    // await SecureStore.setItemAsync('token',user.data.token);
+    // await SecureStore.setItemAsync('name',user.data.data.name);
+    // await SecureStore.setItemAsync('birthday',user.data.data.date_of_birth);
+    // await SecureStore.setItemAsync('picture',user.data.data.profile_picture);
+    if(user.data.token)
+    return true;
+    else
+    return false
   } catch(error) {
     console.log(error)
-    return 0;
+    return false;
   }
 }

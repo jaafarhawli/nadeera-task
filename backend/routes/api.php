@@ -13,7 +13,7 @@ Route::group(["prefix"=> "v1"], function() {
     Route::post('/profile', [UserController::class, "uploadImage"]);
 
     Route::group(["middleware" => "auth:api"], function() {
-        Route::get('/valid', [AuthController::class, "login"]);
+        Route::post('/valid', [AuthController::class, "login"]);
         Route::get('/', [TodoListController::class, "showList"]);
     });
     
