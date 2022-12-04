@@ -1,5 +1,5 @@
 import { View, Image, TouchableOpacity } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { styles } from './RegisterStyles'
 import Input from '../../../components/Reusable/Input'
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -14,10 +14,11 @@ const Register = ({route}) => {
   const {id, name, birthday, picture} = route.params;
   console.log(id, name, birthday, picture);
   const [show, setShow] = useState(false);
-  const [date, setDate] = useState(new Date(birthday));
-  const [image, setImage] = useState(picture);
-  const [userName, setUserName] = useState(name);
+  const [date, setDate] = useState(birthday? new Date(birthday): '');
+  const [image, setImage] = useState(picture? picture: '');
+  const [userName, setUserName] = useState(name? name: '');
   const [imageChanged, setImageChanged] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -85,6 +86,13 @@ const Register = ({route}) => {
     }
   }
 
+  useEffect(() => {
+    if(date === '' || image==='' || userName==='')
+    setDisabled(true);
+    else
+    setDisabled(false)
+  }, [date, image, userName]);
+
   return (
     <View style={styles.container}>
       <AppText h1 style={styles.header}>Register Account</AppText>
@@ -105,7 +113,7 @@ const Register = ({route}) => {
           onChange={onChange}
         />
       )}
-      <AppButton style={styles.registerButton} onPress={register} >Register</AppButton>
+      <AppButton style={styles.registerButton} disabled={disabled} onPress={!disabled? register : null} >Register</AppButton>
     </View>
   )
 }
