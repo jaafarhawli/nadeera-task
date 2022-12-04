@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, ActivityIndicator, Image } from 'react-native'
 import React, {useState} from 'react'
 import { styles } from './LoginStyles'
 import { images } from '../../../constants'
@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query'
 import axios from '../../../api/axios/axios'
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import { colors } from '../../../constants'
 
 const Login = () => {
 
@@ -18,8 +19,10 @@ const Login = () => {
   const [ , , fbPromptAsync] = Facebook.useAuthRequest({
     clientId: "519953483484349"
   })
+  const [loading, setLoading] = useState(false);
 
   const facebookRegister = useMutation(async () => {
+    setLoading(true);
     const response = await fbPromptAsync();
     if(response.type === 'success') {
       const { access_token } = response.params;
@@ -42,15 +45,23 @@ const Login = () => {
         await SecureStore.setItemAsync('birthday',login.data.data.date_of_birth);
         await SecureStore.setItemAsync('picture',login.data.data.profile_picture);
         await SecureStore.setItemAsync('id',login.data.id);
+        setLoading(false);
         navigation.navigate('Home');
       }
       } catch(error) {
         console.log(error)
       }
     }
+    setLoading(false);
   })
 
   return (
+    <>
+    {loading ?
+    <View style={{flex:1, justifyContent: 'center', alignItems:'center'}}>
+     <ActivityIndicator size="large" color={colors.primary} />
+    </View>
+    :
     <View style={styles.container}>
         <Image source={images.logo} style={styles.image} />
         <AppText h1 style={styles.header}>Welcome!</AppText>
@@ -60,7 +71,8 @@ const Login = () => {
             </FontAwesome.Button>
         </TouchableOpacity>
         <Image source={images.waves} style={styles.waves} />
-    </View>
+    </View>}
+    </>
   )
 }
 

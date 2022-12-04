@@ -26,9 +26,8 @@ const CustomDrawer = (props) => {
     }
 
     const signOut = async () => {
-        SecureStore.deleteItemAsync('token').then(
-            navigation.reset({ index: 0, routes: [{ name: "Login" }], })
-        );
+        await SecureStore.deleteItemAsync('token');
+        navigation.navigate('Login')
     }
 
     useEffect(() => {
