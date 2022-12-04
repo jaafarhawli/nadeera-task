@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 import React, {useState} from 'react'
 import { styles } from './RegisterStyles'
 import Input from '../../../components/Reusable/Input'
@@ -23,9 +23,6 @@ const Register = ({route}) => {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
-    let tempDate = new Date(currentDate);
-    let fDate = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate();
-    console.log(fDate);
   };
 
   const showDatepicker = () => {
@@ -40,12 +37,6 @@ const Register = ({route}) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-      DocumentPickerOptions: {
-        type: 'image/*'
-      },
-      DocumentResult: {
-        name
-      }
     });
 
     console.log(result);
@@ -53,68 +44,43 @@ const Register = ({route}) => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
       setImageChanged(true);
-      const fileName = result.assets[0].uri.split('/').pop();
-      const fileType = fileName.split('.').pop();
-
-      console.log(fileName, fileType);
-      const formData = new FormData();
-      formData.append('image', {
-        uri: result.assets[0].uri,
-        type: `image/${fileType}`,
-        name: fileName
-    });
-    formData.append('id', id)
-     try { 
-      await axios.post('profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-    }
-    catch(error) {
-      console.log(error);
-    }
   }
   };
 
   const register = async () => {
     let formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    const form = {
-      id: id, 
-      name: userName,
-      date_of_birth: formattedDate
-    }
-    try {
-    const data = await axios.post('register', form);
-    if(imageChanged) {
-    const fileName = result.assets[0].uri.split('/').pop();
-    const fileType = fileName.split('.').pop();
     const formData = new FormData();
+    if(imageChanged) {
+    const fileName = image.split('/').pop();
+    const fileType = fileName.split('.').pop();
       formData.append('image', {
         uri: image,
         type: `image/${fileType}`,
         name: fileName
     });}
     else {
-      const formData = new FormData();
       formData.append('image', {
         uri: image,
         type: `image/jpeg`,
         name: id + '.jpg'
     });
     }
-    formData.append('id', id)
+    formData.append('id', id);
+    formData.append('name', userName);
+    formData.append('date_of_birth', formattedDate);
      try { 
-      await axios.post('profile', formData, {
+      const data = await axios.post('register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      })
+      });
+      console.log(data.data.authorization.token, data.data.data.profile_picture)
+      await SecureStore.setItemAsync('token',data.data.authorization.token);
+      await SecureStore.setItemAsync('name',userName);
+      await SecureStore.setItemAsync('birthday',formattedDate);
+      await SecureStore.setItemAsync('picture',data.data.data.profile_picture);
     }
     catch(error) {
-      console.log(error);
-    }
-    } catch(error) {
       console.log(error);
     }
   }
@@ -127,7 +93,7 @@ const Register = ({route}) => {
       </TouchableOpacity>
       <View style={styles.nameInput}>
         <AppText style={styles.nameLabel}>Name</AppText>
-        <Input placeholder='Name'  defaultValue={name} onChange={newText => setUserName(newText)} />
+        <Input defaultValue={name} onChange={newText => setUserName(newText)} />
       </View>
       <AppButton style={styles.birthdayButton} textStyle={styles.birthdayButtonText} onPress={showDatepicker}>Select Birthday Date</AppButton>
       {show && (
