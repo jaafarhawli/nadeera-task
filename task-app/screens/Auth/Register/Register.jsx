@@ -1,4 +1,4 @@
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { styles } from './RegisterStyles'
 import Input from '../../../components/Reusable/Input'
@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from '../../../api/axios/axios';
 import AppText from '../../../components/Reusable/AppText';
 import * as SecureStore from 'expo-secure-store';
+import { colors } from '../../../constants'
 
 const Register = ({route}) => {
 
@@ -19,6 +20,7 @@ const Register = ({route}) => {
   const [userName, setUserName] = useState(name? name: '');
   const [imageChanged, setImageChanged] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -91,13 +93,14 @@ const Register = ({route}) => {
     setDisabled(true);
     else
     setDisabled(false)
-  }, [date, image, userName]);
+  }, [date, image, userName, loading]);
 
   return (
     <View style={styles.container}>
       <AppText h1 style={styles.header}>Register Account</AppText>
-      <TouchableOpacity  activeOpacity={0.6} onPress={pickImage}>
-        <Image source={{uri: image}} style={styles.profile} />
+      <TouchableOpacity  activeOpacity={0.6} onPress={pickImage} style={styles.profileContainer}>
+        <ActivityIndicator size="large" color={colors.primary} style={!loading? styles.none : null} />
+        <Image source={{uri: image}} style={loading? styles.none : styles.profile} onLoadEnd={() => setLoading(false)} />
       </TouchableOpacity>
       <View style={styles.nameInput}>
         <AppText style={styles.nameLabel}>Name</AppText>

@@ -32,7 +32,18 @@ export const styles = StyleSheet.create({
       borderRadius: 200,
       marginBottom: 20
     },
+    profileContainer: {
+      width: 200, 
+      height: 200,
+      borderRadius: 200,
+      marginBottom: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     registerButton: {
       width: '100%'
+    },
+    none: {
+      display: 'none'
     }
   });
