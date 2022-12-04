@@ -10,12 +10,11 @@ function DrawerNavigator() {
     <Drawer.Navigator 
         screenOptions={{
             headerTitleAlign: 'center',
-            headerTintColor: colors.white,
+            headerTintColor: 'black',
             headerTitleStyle: {
-                color: colors.white
+                color: 'black'
             },
             headerStyle: {
-                backgroundColor: colors.black[200],
                 elevation: 0,
                 shadowOpacity: 0,
         },

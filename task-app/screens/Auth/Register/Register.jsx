@@ -16,7 +16,6 @@ const Register = ({route}) => {
   const navigation = useNavigation();
 
   const {id, name, birthday, picture} = route.params;
-  console.log(id, name, birthday, picture);
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(birthday? new Date(birthday): '');
   const [image, setImage] = useState(picture? picture: '');

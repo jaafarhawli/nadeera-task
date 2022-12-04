@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import colors from '../../../constants/colors';
+import { colors } from '../../constants';
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,5 +7,10 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center'
     },
-    
+    profile: {
+        width: 200, 
+        height: 200,
+        borderRadius: 200,
+        marginBottom: 20
+      },
   });
