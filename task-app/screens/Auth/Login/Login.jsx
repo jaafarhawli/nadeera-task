@@ -34,7 +34,7 @@ const Login = () => {
       const data = await axios.get(`https://graph.facebook.com/me?fields=id,name,birthday&access_token=${access_token}`);
       // Get the profile picture
       const picture = `https://graph.facebook.com/${data.data.id}/picture?access_token=${access_token}&height=800&width=800`;
-      login(data.data.id, picture, navigation, setLoading);
+      login(data.data.id, picture, data, navigation, setLoading);
     }
     setLoading(false);
   })

@@ -1,7 +1,7 @@
 import axios from "./axios/axios";
 import * as SecureStore from 'expo-secure-store';
 
-export const login = async (id, picture, navigation, setLoading) => {
+export const login = async (id, picture, data, navigation, setLoading) => {
     const form = {
         id: id
       }
@@ -20,7 +20,6 @@ export const login = async (id, picture, navigation, setLoading) => {
         await SecureStore.setItemAsync('birthday',login.data.data.date_of_birth);
         await SecureStore.setItemAsync('picture',login.data.data.profile_picture);
         await SecureStore.setItemAsync('id',login.data.id);
-        setLoading(false);
         navigation.navigate('Home');
       }
       } catch(error) {
