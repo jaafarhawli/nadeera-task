@@ -22,7 +22,7 @@ function DrawerNavigator() {
       drawerContent={props => <CustomDrawer {...props} />}
       >
         <Drawer.Screen name='Dashboard' component={Dashboard} />
-        <Drawer.Screen name='Login' component={Login} />
+        <Drawer.Screen name='Login' component={Login} options={{headerShown: false}}/>
     </Drawer.Navigator>
   );
 }

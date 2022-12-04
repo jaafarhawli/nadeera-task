@@ -7,8 +7,6 @@ import { validate } from './api/validateUser';
 import React, {useState, useEffect} from 'react'
 import { ActivityIndicator, View } from 'react-native';
 import { colors } from './constants';
-import {Provider} from 'react-redux';
-import { store } from './redux/store';
 
 export default function App() {
 
@@ -27,7 +25,6 @@ export default function App() {
   }, [isAuth]);
 
   return (
-    <Provider store={store}>
       <QueryClientProvider client={client}>
         <NavigationContainer>
           {
@@ -43,6 +40,5 @@ export default function App() {
           }
         </NavigationContainer>
       </QueryClientProvider>
-    </Provider>
   );
 }
