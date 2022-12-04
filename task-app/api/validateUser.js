@@ -1,6 +1,7 @@
 import axios from "./axios/axios";
 import * as SecureStore from 'expo-secure-store';
 
+// This api call is used to validate the stored token when the user opens the app
 export const validate = async () => {
 
     const token = await SecureStore.getItemAsync('token');
@@ -14,10 +15,6 @@ export const validate = async () => {
             Authorization: `bearer ${token}`
         }
     });
-    // await SecureStore.setItemAsync('token',user.data.token);
-    // await SecureStore.setItemAsync('name',user.data.data.name);
-    // await SecureStore.setItemAsync('birthday',user.data.data.date_of_birth);
-    // await SecureStore.setItemAsync('picture',user.data.data.profile_picture);
     if(user.data.token)
     return true;
     else

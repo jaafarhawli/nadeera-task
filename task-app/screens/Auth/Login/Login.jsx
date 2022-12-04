@@ -15,18 +15,24 @@ import { colors } from '../../../constants'
 const Login = () => {
 
   const navigation = useNavigation();
+  
+  const [loading, setLoading] = useState(false);
 
+  // Connect to facebook app
   const [ , , fbPromptAsync] = Facebook.useAuthRequest({
     clientId: "519953483484349"
   })
-  const [loading, setLoading] = useState(false);
 
   const facebookRegister = useMutation(async () => {
     setLoading(true);
+    // Get the token after logging in
     const response = await fbPromptAsync();
+    
     if(response.type === 'success') {
       const { access_token } = response.params;
+      // Get the id, name, and birthday from the token
       const data = await axios.get(`https://graph.facebook.com/me?fields=id,name,birthday&access_token=${access_token}`);
+      // Get the profile picture
       const picture = `https://graph.facebook.com/${data.data.id}/picture?access_token=${access_token}&height=800&width=800`;
       const form = {
         id: data.data.id

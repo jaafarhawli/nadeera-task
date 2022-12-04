@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column'   
     },
     date: {
-        // width: '100%',
         alignSelf: 'flex-end'
     }
 })

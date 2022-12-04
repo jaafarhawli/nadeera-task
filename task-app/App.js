@@ -11,8 +11,11 @@ import { colors } from './constants';
 export default function App() {
 
   const client = new QueryClient();
+
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  // Check if the token stored is valid
   const checkIfValid = async () => {
     const valid = await validate();
     setLoading(false)
@@ -33,6 +36,8 @@ export default function App() {
             <ActivityIndicator size="large" color={colors.primary} />
           </View>
           :
+          // If the stored token is valid, open the dashboard page
+          // Else, redirect to the login page
           isAuth ? 
           <DrawerNavigator />
           :

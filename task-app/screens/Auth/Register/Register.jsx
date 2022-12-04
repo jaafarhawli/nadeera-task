@@ -24,23 +24,26 @@ const Register = ({route}) => {
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // Set the date to the new selected one
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
   };
 
+  // Open the date picker
   const showDatepicker = () => {
     if (Platform.OS === 'android') {
       setShow(true);
     }
   };
 
+  // Open the image picker 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
       quality: 1,
     });
 
@@ -51,8 +54,11 @@ const Register = ({route}) => {
   };
 
   const register = async () => {
+    // Convert date to send it to the server
     let formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     const formData = new FormData();
+    // If the user has chosen a new image
+    // Get the file name and file type from the uri
     if(imageChanged) {
     const fileName = image.split('/').pop();
     const fileType = fileName.split('.').pop();
@@ -61,6 +67,7 @@ const Register = ({route}) => {
         type: `image/${fileType}`,
         name: fileName
     });}
+    // Otherwise upload the facebook profile image
     else {
       formData.append('image', {
         uri: image,
