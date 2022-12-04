@@ -1,7 +1,7 @@
 import axios from "./axios/axios";
 import * as SecureStore from 'expo-secure-store';
 
-export const login = async (id, picture, data, navigation, setLoading) => {
+export const login = async (id, picture, data, navigation) => {
     const form = {
         id: id
       }

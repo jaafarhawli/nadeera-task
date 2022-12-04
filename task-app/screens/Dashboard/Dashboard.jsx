@@ -1,4 +1,4 @@
-import { View, ScrollView } from 'react-native'
+import { LogBox , ScrollView } from 'react-native'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import * as SecureStore from 'expo-secure-store';
@@ -7,7 +7,9 @@ import { styles } from './DashboardStyles';
 import AppText from '../../components/Reusable/AppText';
 import Task from '../../components/Reusable/Task';
 
+
 const Dashboard = () => {
+  LogBox.ignoreAllLogs();
     
     const {data} = useQuery(["todoList"], async () => {
         const token = await SecureStore.getItemAsync('token');
