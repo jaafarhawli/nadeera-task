@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, {useState} from 'react'
 import { styles } from './RegisterStyles'
 import Input from '../../../components/Reusable/Input'
@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import AppButton from '../../../components/Reusable/AppButton';
 import * as ImagePicker from 'expo-image-picker';
 import axios from '../../../api/axios/axios';
+import AppText from '../../../components/Reusable/AppText';
 
 const Register = ({route}) => {
 
@@ -74,9 +75,14 @@ const Register = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Image source={image?{uri: image} : {uri:picture}} style={styles.profile} />
-      <AppButton onPress={pickImage}>Select Your Profile Picture</AppButton>
-      <Input placeholder='Name' style={styles.nameInput} />
+      <AppText h1 style={styles.header}>Register Account</AppText>
+      <TouchableOpacity  activeOpacity={0.6} onPress={pickImage}>
+        <Image source={image?{uri: image} : {uri:picture}} style={styles.profile} />
+      </TouchableOpacity>
+      <View style={styles.nameInput}>
+        <AppText style={styles.nameLabel}>Name</AppText>
+        <Input placeholder='Name'  defaultValue={name} />
+      </View>
       <AppButton style={styles.birthdayButton} textStyle={styles.birthdayButtonText} onPress={showDatepicker}>Select Birthday Date</AppButton>
       {show && (
         <DateTimePicker

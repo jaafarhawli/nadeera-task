@@ -8,10 +8,16 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       padding: 40,
     },
-    nameInput: {
-      marginBottom: 20
+    header: {
+      marginBottom: 40
     },
-
+    nameInput: {
+      marginBottom: 20,
+      width: '100%'
+    },
+    nameLabel: {
+      textAlign: 'left',
+    },
     birthdayButton: {
       width: '100%',
       backgroundColor: 'white'
