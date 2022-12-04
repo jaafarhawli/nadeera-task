@@ -33,27 +33,36 @@ class AuthController extends Controller
             "id" => "required|unique:users",
             "name" => "required",
             "date_of_birth" => "required",
-            "profile_picture" => "required",
+            'image.*' => 'required|mimes:doc,pdf,docx,zip,jpeg,png,jpg,gif,svg',
         ]);
-
-        $user = new User();
-        $user->id = $request->id;
-        $user->name = $request->name;
-        $user->date_of_birth = $request->date_of_birth;
-        $user->profile_picture = $request->profile_picture;
-        $user->save();
-
-        $user=User::where('id','=',$request->id)->first();
-        $token=JWTAuth::fromUser($user);
-
-        return response()->json([
-            "status" => 1,
-            "message" => "User registered successfully",
-            "authorisation" => [
-                "token" => $token,
-                "type" => "bearer",
-            ]
-        ], 200);
+        $id = $request->id;
+        if($file = $request->hasFile('image')) {
+             
+            $file = $request->file('image') ;
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path().'/images'.'/'.$id;
+            $file->move($destinationPath,$fileName);
+            $url = 'http://192.168.0.105:8000/images/'.$id.'/'.$fileName;
+            $user = new User();
+            $user->id = $request->id;
+            $user->name = $request->name;
+            $user->date_of_birth = $request->date_of_birth;
+            $user->profile_picture = $url;
+            $user->save();
+    
+            $user=User::where('id','=',$request->id)->first();
+            $token=JWTAuth::fromUser($user);
+    
+            return response()->json([
+                "status" => 1,
+                "message" => "User registered successfully",
+                "authorisation" => [
+                    "token" => $token,
+                    "type" => "bearer",
+                ]
+            ], 200);
+        }
+        else return response()->json(['error' => 'invalid credentials'], 401);
     }
 
 }

@@ -20,7 +20,8 @@ export const styles = StyleSheet.create({
     },
     birthdayButton: {
       width: '100%',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      marginBottom: 21
     },
     birthdayButtonText: {
       color: colors.secondary
@@ -30,5 +31,8 @@ export const styles = StyleSheet.create({
       height: 200,
       borderRadius: 200,
       marginBottom: 20
+    },
+    registerButton: {
+      width: '100%'
     }
   });

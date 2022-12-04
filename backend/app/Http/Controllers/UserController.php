@@ -19,12 +19,12 @@ class UserController extends Controller
                 $fileName = $file->getClientOriginalName() ;
                 $destinationPath = public_path().'/images'.'/'.$id;
                 $file->move($destinationPath,$fileName);
-                $url = 'http://127.0.0.1:8000/images/'.$id.'/'.$fileName;
-                User::where('id', '=', $id)->update(['profile_picture' => $url]);
-                return response()->json([
-                    "status" => "Success",
-                    "path" => $url
-                ]); 
+                $url = 'http://192.168.0.105:8000/images/'.$id.'/'.$fileName;
+                // User::where('id', '=', $id)->update(['profile_picture' => $url]);
+                // return response()->json([
+                //     "status" => "Success",
+                //     "path" => $url
+                // ]); 
         }
       }
     } 

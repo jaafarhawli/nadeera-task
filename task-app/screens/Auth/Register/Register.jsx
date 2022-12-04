@@ -7,6 +7,7 @@ import AppButton from '../../../components/Reusable/AppButton';
 import * as ImagePicker from 'expo-image-picker';
 import axios from '../../../api/axios/axios';
 import AppText from '../../../components/Reusable/AppText';
+import * as SecureStore from 'expo-secure-store';
 
 const Register = ({route}) => {
 
@@ -14,7 +15,9 @@ const Register = ({route}) => {
   console.log(id, name, birthday, picture);
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date(birthday));
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(picture);
+  const [userName, setUserName] = useState(name);
+  const [imageChanged, setImageChanged] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -49,6 +52,7 @@ const Register = ({route}) => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setImageChanged(true);
       const fileName = result.assets[0].uri.split('/').pop();
       const fileType = fileName.split('.').pop();
 
@@ -73,15 +77,57 @@ const Register = ({route}) => {
   }
   };
 
+  const register = async () => {
+    let formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    const form = {
+      id: id, 
+      name: userName,
+      date_of_birth: formattedDate
+    }
+    try {
+    const data = await axios.post('register', form);
+    if(imageChanged) {
+    const fileName = result.assets[0].uri.split('/').pop();
+    const fileType = fileName.split('.').pop();
+    const formData = new FormData();
+      formData.append('image', {
+        uri: image,
+        type: `image/${fileType}`,
+        name: fileName
+    });}
+    else {
+      const formData = new FormData();
+      formData.append('image', {
+        uri: image,
+        type: `image/jpeg`,
+        name: id + '.jpg'
+    });
+    }
+    formData.append('id', id)
+     try { 
+      await axios.post('profile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+    }
+    catch(error) {
+      console.log(error);
+    }
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <AppText h1 style={styles.header}>Register Account</AppText>
       <TouchableOpacity  activeOpacity={0.6} onPress={pickImage}>
-        <Image source={image?{uri: image} : {uri:picture}} style={styles.profile} />
+        <Image source={{uri: image}} style={styles.profile} />
       </TouchableOpacity>
       <View style={styles.nameInput}>
         <AppText style={styles.nameLabel}>Name</AppText>
-        <Input placeholder='Name'  defaultValue={name} />
+        <Input placeholder='Name'  defaultValue={name} onChange={newText => setUserName(newText)} />
       </View>
       <AppButton style={styles.birthdayButton} textStyle={styles.birthdayButtonText} onPress={showDatepicker}>Select Birthday Date</AppButton>
       {show && (
@@ -93,6 +139,7 @@ const Register = ({route}) => {
           onChange={onChange}
         />
       )}
+      <AppButton style={styles.registerButton} onPress={register} >Register</AppButton>
     </View>
   )
 }
