@@ -21,21 +21,23 @@ are loaded to the register screen.
    cd task-app
    npm install
    ```
-4. Seed and migrate data from laravel to the database
+4. Open the backend folder and replace the ip address in the the todo list seeder file and the register function inside the Auth controller to your ipv4 address
+5. Open the task-app folder and replace the ip address in the axios file to your ipv4 address
+6. Seed and migrate data from laravel to the database
    ```sh
    cd backend
    php artisan migrate:fresh --seed --seeder=TodoListSeeder
    ```
-5. Rename .env.example to .env inside the backend folder
-6. Start the application
+7. Rename .env.example to .env inside the backend folder
+8. Start the application
    Run Apache and MySQL in XAMPP
    ```sh
    cd backend
-   php artisan serve
+   php artisan serve --host <Your ipv4 address> --PORT 8000
    ```
    ```sh
    cd task-app
    npm start
    ```
-7. Scan the QR code on expo go and open the application
+9. Scan the QR code on expo go and open the application
 
